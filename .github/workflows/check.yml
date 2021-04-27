@@ -46,8 +46,7 @@ jobs:
       with:
         java-version: 8
 
-    # Test.
-    - name: Run tests.
+    - name: Build samples/unittest
       run: |
         ./gradlew -p samples/unittest testDebugUnitTest --warning-mode all
 
