@@ -9,25 +9,45 @@ on:
     branches: [ master ]
 
 jobs:
+  generate_versions:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v1
+
+    - name: Gradle test
+      run: |
+        ./gradlew -p plugin generateTestTasksJson
+
+    - id: setup-matrix
+      run: echo "::set-output name=matrix::$(cat plugin/build/build-resources/androidTestTasks.json)"
+
+    - name: debug
+      run: echo ${{ steps.setup-matrix.outputs.matrix }}
+
+    outputs:
+      matrix: ${{ steps.setup-matrix.outputs.matrix }}
+
   android_version_tests:
-    # needs: [generate_versions, sanity_check]
+    needs: [generate_versions] # , sanity_check]
 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # strategy:
-    #   fail-fast: false
-    #   matrix:
-    #     androidTestTask: ${{ fromJson(needs.generate_versions.outputs.matrix) }}
+    strategy:
+      fail-fast: false
+      matrix:
+        androidTestTask: ${{ fromJson(needs.generate_versions.outputs.matrix) }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v1
 
-    # # Sets up the NDK required by AGP 3.6.x
-    # - name: Setup NDK
-    #   run: sudo $ANDROID_HOME/tools/bin/sdkmanager 'ndk;20.0.5594570'
+    # Sets up the NDK required by AGP 3.6.x
+    - name: Setup NDK
+      run: sudo $ANDROID_HOME/tools/bin/sdkmanager 'ndk;20.0.5594570'
 
     - name: Install Rustup
       run: |
@@ -46,9 +66,9 @@ jobs:
       with:
         java-version: 8
 
-    - name: Build samples/unittest
+    - name: Gradle test
       run: |
-        ./gradlew -p plugin test --tests CargoBuildTest --info --warning-mode all
+        ./gradlew -p plugin ${{ matrix.androidTestTask }} --info --warning-mode all
 
     # # Gradle build
     # - uses: eskatos/gradle-command-action@v1
