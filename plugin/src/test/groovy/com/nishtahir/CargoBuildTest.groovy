@@ -20,7 +20,7 @@ class CargoBuildTest extends AbstractTest {
                 .build()
                 .writeProject()
 
-        def cargoModule = this.class.classLoader.getResource("Cargo.toml").path
+        def cargoModule = this.class.classLoader.getResource("rust/Cargo.toml").path
         cargoModule = new File(cargoModule).parent
 
         file('app/build.gradle') << """
@@ -45,9 +45,10 @@ class CargoBuildTest extends AbstractTest {
         BuildResult buildResult = withGradleVersion(gradleVersion.version)
                 .withProjectDir(temporaryFolder.root)
                 .withArguments('cargoBuild', '--info', '--stacktrace')
-                .withDebug(true)
+                // .withDebug(true)
                 .build()
 
+        // To ease debugging.
         temporaryFolder.root.eachFileRecurse {
             println(it)
         }
