@@ -68,7 +68,7 @@ jobs:
 
     - name: Gradle test
       run: |
-        ./gradlew -p plugin ${{ matrix.androidTestTask }} --info --warning-mode all
+        ./gradlew -p plugin ${{ matrix.androidTestTask }} --tests CargoBuildTest --info --warning-mode all
 
     # # Gradle build
     # - uses: eskatos/gradle-command-action@v1

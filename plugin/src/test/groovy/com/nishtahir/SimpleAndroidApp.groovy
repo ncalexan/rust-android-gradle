@@ -154,7 +154,7 @@ class SimpleAndroidApp {
     private String getNdkVersion() {
         def isAndroid34x = androidVersion >= android("3.4.0")
         if (isAndroid34x) {
-            return """ndkVersion "20.1.5948944""""
+            return """ndkVersion '21.4.7075529'"""
         } else {
             return ""
         }
