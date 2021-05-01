@@ -48,7 +48,7 @@ jobs:
 
     - name: Build samples/unittest
       run: |
-        ./gradlew -p samples/unittest testDebugUnitTest --warning-mode all
+        ./gradlew -p plugin test --tests CargoBuildTest --info --warning-mode all
 
     # # Gradle build
     # - uses: eskatos/gradle-command-action@v1
