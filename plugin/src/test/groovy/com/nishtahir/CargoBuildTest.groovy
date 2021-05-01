@@ -27,7 +27,7 @@ class CargoBuildTest extends AbstractTest {
             cargo {
                 module = "${cargoModule}"
                 targetDirectory = "${cargoModule}/../target"
-                targets = ["arm"]
+                targets = ["x86_64"]
                 libname = "rust"
             }
         """.stripIndent()
@@ -36,7 +36,7 @@ class CargoBuildTest extends AbstractTest {
             cargo {
                 module = "${cargoModule}"
                 targetDirectory = "${cargoModule}/../target"
-                targets = ["arm"]
+                targets = ["x86_64"]
                 libname = "rust"
             }
         """.stripIndent()
