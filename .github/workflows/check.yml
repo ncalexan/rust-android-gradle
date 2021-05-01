@@ -45,14 +45,14 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v1
 
-    # Sets up the NDK required by AGP 3.6.x
-    - name: Setup NDK
-      run: sudo $ANDROID_HOME/tools/bin/sdkmanager 'ndk;20.0.5594570'
+    # # Sets up the NDK required by AGP 3.6.x
+    # - name: Setup NDK
+    #   run: sudo $ANDROID_HOME/tools/bin/sdkmanager 'ndk;20.0.5594570'
 
-    - name: Install Rustup
-      run: |
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain none
-        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+    # - name: Install Rustup
+    #   run: |
+    #     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain none
+    #     echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
     - name: Setup Rust
       run: |
@@ -65,6 +65,10 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 8
+
+    - name: Gradle setup
+      run: |
+        ./gradlew -p plugin tasks --warning-mode all
 
     - name: Gradle test
       run: |

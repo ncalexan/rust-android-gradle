@@ -134,7 +134,8 @@ tasks.register('generateTestTasksJson') {
     outputs.dir generatedBuildResources
     doLast {
         outputFile.text = new JsonBuilder(
-            ['test'] + (supportedVersions.keySet().collect {androidVersion -> androidTestTaskName(androidVersion) })
+            // ['test'] +
+            (supportedVersions.keySet().collect {androidVersion -> androidTestTaskName(androidVersion) })
         ).toString()
     }
 }
