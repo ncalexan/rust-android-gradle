@@ -13,6 +13,3 @@ crate_type = ["staticlib", "dylib"]
 default = ["foo"]
 foo = []
 bar = []
-
-[build]
-target-dir = "../target"
